@@ -21,7 +21,7 @@ public class AlteracaoRestauranteMain {
 		restaurante.setId(1L);
 		restaurante.setNome("Brasileira");
 		
-		restauranteRepository.adicionar(restaurante);
+		restauranteRepository.salvar(restaurante);
 	}
 
 }
