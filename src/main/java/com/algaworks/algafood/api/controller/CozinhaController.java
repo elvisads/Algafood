@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 
 @RestController
-@RequestMapping("/cozinhas")
+@RequestMapping(value = "/cozinhas")
 public class CozinhaController {
 	
 	@Autowired
@@ -78,14 +80,34 @@ public class CozinhaController {
 		Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
 		
 		if (cozinhaAtual != null) {
-	//		cozinhaAtual.setNome(cozinha.getNome());
+			System.out.println("NAO ESTÁ NULO");
+	//		cozinhaAtual.setNome(cozinha.getNome());		"id" especifica nomes de entidades que quer ignorar
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 			
 			cozinhaRepository.salvar(cozinhaAtual);
+			
 			return ResponseEntity.ok(cozinhaAtual);
+			
 		}
-		
+		System.out.println("ESTA NULO");
 		return ResponseEntity.notFound().build();
 	}
+	
+	@DeleteMapping("/{cozinhaId}")
+	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
+		try {
+			Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
 
+			if (cozinha != null) {
+				cozinhaRepository.remover(cozinha);
+				
+				return ResponseEntity.noContent().build();
+			}
+			
+			return ResponseEntity.notFound().build();			
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
+	
 }
