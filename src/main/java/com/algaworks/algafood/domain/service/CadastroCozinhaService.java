@@ -31,8 +31,10 @@ public class CadastroCozinhaService {
 			
 		}  catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Cozinha de codigo%d não pode ser removida pois está em uso", cozinhaId));
+					String.format("Cozinha de codigo %d não pode ser removida pois está em uso", cozinhaId));
 		}
 			
 	}
 }
+
+
