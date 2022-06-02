@@ -37,7 +37,6 @@ public class CozinhaController {
 		return cozinhaRepository.listar();
 	}
 	
-//	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
 		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);

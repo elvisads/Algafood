@@ -54,37 +54,33 @@ public class RestauranteController {
 		try {
 			restaurante = cadastroRestaurante.salvar(restaurante);
 			
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(restaurante);
+			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
 		} catch (EntidadeNaoEncontradaException e) {
-			
-			return ResponseEntity.badRequest()
-					.body(e.getMessage());
-			
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	
 	}
 	
 	@PutMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> atualizar(@PathVariable Long restauranteId,
+	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
 			@RequestBody Restaurante restaurante) {
-		Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
-		
-		if (restauranteAtual != null) {
-			System.out.println("NÃO ESTÁ NULO");
-//			restaurante.setNome(restaurante.getNome());
-			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "cozinha", "taxaFrete");
-		
-			cadastroRestaurante.salvar(restauranteAtual);
-			
-			return ResponseEntity.ok(restauranteAtual);
-		
-		}
-		System.out.println("ESTA NULO");
-		return ResponseEntity.notFound().build();
-	
-		
-		
+			try {
+				Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
+				if (restauranteAtual != null) {
+					System.out.println("NÃO ESTÁ NULO");
+		//			restaurante.setNome(restaurante.getNome());
+					BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+				
+					cadastroRestaurante.salvar(restauranteAtual);
+					return ResponseEntity.ok(restauranteAtual);
+									
+				}
+				
+				return ResponseEntity.notFound().build();
+				
+			} catch (EntidadeNaoEncontradaException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());	
+			}
 	}
 	
 	@PatchMapping("/{restauranteId}")
@@ -106,6 +102,11 @@ public class RestauranteController {
 			System.out.println(nomePropriedade + " = " + valorPropriedade);
 		});
 	}
+	
+	
+	
+
+
 	
 	
 
