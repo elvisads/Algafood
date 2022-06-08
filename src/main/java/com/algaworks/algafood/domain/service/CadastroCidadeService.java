@@ -32,7 +32,5 @@ public class CadastroCidadeService {
 			throw new EntidadeEmUsoException(
 					String.format("Cozinha de codigo %d não pode ser removida pois está em uso", cidadeId));
 		}
-		
-		
 	}
 }
