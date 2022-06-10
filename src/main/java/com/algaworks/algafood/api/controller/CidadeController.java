@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -59,12 +61,27 @@ public class CidadeController {
 		
 	}
 	
-//	@PutMapping("/{Id}")
-//	public ResponseEntity<Cidade> atualizar(@PathVariable Long Id){
-//		cadastroCidade.salvar(Id);
-//		return null;
-//	}
-//	
+	@PutMapping("/{Id}")	
+	public ResponseEntity<?> atualizar(@PathVariable Long Id,
+			@RequestBody Cidade cidade){
+		try {
+			Cidade cidadeAtual = cidadeRepository.buscar(Id);
+			
+			if (cidadeAtual != null) {
+				System.out.println("Não está nulo");
+				BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+				
+				cadastroCidade.salvar(cidadeAtual);
+				return ResponseEntity.ok(cidadeAtual);
+			}
+			
+			return ResponseEntity.notFound().build();
+	
+		} catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	
 	
 	
