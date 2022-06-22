@@ -8,7 +8,7 @@ Projeto README Em construção...
 - [x] Spring e Injeção de Dependências
 - [x] Introdução ao JPA e Hibernate
 - [x] REST com Spring
-- [ ] Spring Data JPA
+- [Em Andamento] Spring Data JPA
 - [ ] Explorando mais do JPA e Hibernate
 - [ ] Pool de conexões e Flyway
 - [ ] Tratamento e modelagem de erros da API
