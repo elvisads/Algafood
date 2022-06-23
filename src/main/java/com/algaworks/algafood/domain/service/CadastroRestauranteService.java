@@ -34,16 +34,16 @@ public class CadastroRestauranteService {
 		return restauranteRepository.salvar(restaurante);
 	}
 	
-	public void excluir(Long restauranteId) {
-		try {
-			restauranteRepository.remover(restauranteId);
-		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de restaurante com código %d", restauranteId));
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(
-					String.format("Resturante de codigo %d não pode ser removido pois esta em uso", restauranteId));
-		}
-	}
+//	public void excluir(Long restauranteId) {
+//		try {
+//			restauranteRepository.remover(restauranteId);
+//		} catch (EmptyResultDataAccessException e) {
+//			throw new EntidadeNaoEncontradaException(
+//					String.format("Não existe um cadastro de restaurante com código %d", restauranteId));
+//		} catch (DataIntegrityViolationException e) {
+//			throw new EntidadeEmUsoException(
+//					String.format("Resturante de codigo %d não pode ser removido pois esta em uso", restauranteId));
+//		}
+//	}
 }
 
