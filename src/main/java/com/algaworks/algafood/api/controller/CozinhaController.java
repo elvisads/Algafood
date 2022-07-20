@@ -47,20 +47,6 @@ public class CozinhaController {
 		}
 //		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		return ResponseEntity.notFound().build();
-/***
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-				
-		return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-		return ResponseEntity.ok(cozinha);
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinha");
-		
-		return ResponseEntity
-				.status(HttpStatus.FOUND)
-				.headers(headers)
-				.build();
-***/
 	}
 	
 	@PostMapping
@@ -76,7 +62,6 @@ public class CozinhaController {
 		
 		if (cozinhaAtual.isPresent()) {
 			System.out.println("NAO ESTÁ NULO");
-	//		cozinhaAtual.setNome(cozinha.getNome());		"id" especifica nomes de entidades que quer ignorar
 			BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
 			
 			Cozinha cozinhaSalva = cadastroCozinha.salvar(cozinhaAtual.get());

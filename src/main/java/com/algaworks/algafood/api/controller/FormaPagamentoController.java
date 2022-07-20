@@ -19,7 +19,7 @@ public class FormaPagamentoController {
 	
 	@GetMapping
 	public List<FormaPagamento> listar() {
-		return formaPagamentoRepository.listar();
+		return formaPagamentoRepository.findAll();
 	}
 
 }
